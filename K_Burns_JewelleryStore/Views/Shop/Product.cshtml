@@ -1,0 +1,76 @@
+﻿@model K_Burns_JewelleryStore.Models.Product
+@{
+    ViewBag.Title = "Product";
+}
+
+<div class="row">
+
+    <div class="col-lg-3">
+
+        <h2 class="my-4">Shop by Category</h2>
+        <div class="list-group">
+
+            @foreach (var item in ViewBag.Categories)
+            {
+                <a href="@Url.Action("Products", "Shop", new { id = item.CategoryId })" class="list-group-item">@item.Name</a>
+            }
+        </div>
+
+    </div>
+
+    <div class="col-lg-9 center-block">
+
+        <a href="@Url.Action("Products", "Shop", new { id = Model.ProductID })">
+            <img class="img-fluid" style="max-height:350px" src="@Model.ImageUrl" alt="Product Image Displayed"/>
+        </a>
+
+        <div class="card-body">
+            <h3 class="card-title"> @Html.DisplayFor(model => model.ProductName) </h3>
+
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.UnitPrice)
+                </dt>
+                <dd>
+                    £@Html.DisplayFor(model => model.UnitPrice)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Category.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Category.Name)
+                </dd>
+
+            </dl>
+
+            <div class="card-footer">
+                <small class="text-muted">
+                    @if (Model.OnSale == true)
+                    {
+                        <mark>ON SALE</mark>
+                    }
+                    else if (Model.UnitsInStock < 1)
+                    {
+                        <mark>OUT OF STOCK</mark>
+                    }
+                    else
+                    {
+                        <mark>AVAILABLE</mark>
+                    }
+                </small>
+            </div>
+        </div>
+        <br />
+        <br />
+
+        <div>
+            @if (Model.UnitsInStock > 0)
+            {
+                @Html.ActionLink("Add To Cart", "AddToCart", "Shop", new { id = Model.ProductID, @class = "btn btn-lg btn-success" })
+            }
+
+            @Html.ActionLink("Continue Shopping", "Index", "Shop", new { @class = "btn btn-lg btn-success" })
+        </div>
+    </div>
+
+</div>

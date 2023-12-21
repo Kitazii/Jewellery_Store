@@ -1,0 +1,83 @@
+﻿@model IEnumerable<K_Burns_JewelleryStore.Models.User>
+@using K_Burns_JewelleryStore.Models;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+<p>
+    @Html.ActionLink("Create New Staff", "CreateEmployee") | @Html.ActionLink("Create New Role", "CreateRole")
+</p>
+
+<hr />
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find Users by username: @Html.TextBox("SearchString")
+
+        <input type="submit" value="Search" />
+    </p>
+}
+<hr />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegisteredAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsSuspended)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentRole)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegisteredAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsSuspended)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentRole)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit" + (item is Employee ? "Staff" : "Customer"), new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                @Html.ActionLink("Change Role", "ChangeRole", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
